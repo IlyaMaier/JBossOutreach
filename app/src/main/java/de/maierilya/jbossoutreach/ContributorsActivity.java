@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -15,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.maierilya.jbossoutreach.adapters.ContributorsAdapter;
-import de.maierilya.jbossoutreach.adapters.MainAdapter;
 import de.maierilya.jbossoutreach.entities.Contributor;
-import de.maierilya.jbossoutreach.entities.Repository;
 import de.maierilya.jbossoutreach.retrofit.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
