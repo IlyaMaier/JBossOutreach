@@ -55,8 +55,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
     class MainViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name, description, language, stars, forks, watchers;
-        String repo;
+        private TextView name, description, language, stars, forks, watchers;
+        private String repo;
 
         MainViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,7 +78,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
             });
         }
 
-        void setRepo(String repo) {
+        private void setRepo(String repo) {
             this.repo = repo;
         }
 

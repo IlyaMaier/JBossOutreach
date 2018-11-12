@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -15,9 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.maierilya.jbossoutreach.adapters.ContributorsAdapter;
-import de.maierilya.jbossoutreach.adapters.MainAdapter;
 import de.maierilya.jbossoutreach.entities.Contributor;
-import de.maierilya.jbossoutreach.entities.Repository;
 import de.maierilya.jbossoutreach.retrofit.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,11 +24,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContributorsActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    ContributorsAdapter adapter;
-    List<Contributor> contributors;
-    ProgressBar progressBar;
-    String repo;
+    private RecyclerView recyclerView;
+    private ContributorsAdapter adapter;
+    private List<Contributor> contributors;
+    private ProgressBar progressBar;
+    private String repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +41,7 @@ public class ContributorsActivity extends AppCompatActivity {
         initRetrofit();
     }
 
-    void initView() {
+    private void initView() {
         RelativeLayout relativeLayout = findViewById(R.id.frame_contributors);
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200, 200);
@@ -53,16 +50,16 @@ public class ContributorsActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    void initRV() {
+    private void initRV() {
         contributors = new ArrayList<>();
         recyclerView = findViewById(R.id.rv_contributors);
         adapter = new ContributorsAdapter(contributors, this);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.INVISIBLE);
     }
 
-    void initRetrofit() {
+    private void initRetrofit() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Service service = retrofit.create(Service.class);
