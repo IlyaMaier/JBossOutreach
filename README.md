@@ -7,6 +7,10 @@ Used libraries:
 - RecyclerView
 - CardView
 
+Project includes Travis CI
+
+Included example test.
+
 Gif:
 
 <img src="20181111_143731.gif">
