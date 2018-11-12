@@ -24,11 +24,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContributorsActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    ContributorsAdapter adapter;
-    List<Contributor> contributors;
-    ProgressBar progressBar;
-    String repo;
+    private RecyclerView recyclerView;
+    private ContributorsAdapter adapter;
+    private List<Contributor> contributors;
+    private ProgressBar progressBar;
+    private String repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class ContributorsActivity extends AppCompatActivity {
         initRetrofit();
     }
 
-    void initView() {
+    private void initView() {
         RelativeLayout relativeLayout = findViewById(R.id.frame_contributors);
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(200, 200);
@@ -50,16 +50,16 @@ public class ContributorsActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    void initRV() {
+    private void initRV() {
         contributors = new ArrayList<>();
         recyclerView = findViewById(R.id.rv_contributors);
         adapter = new ContributorsAdapter(contributors, this);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.INVISIBLE);
     }
 
-    void initRetrofit() {
+    private void initRetrofit() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Service service = retrofit.create(Service.class);
