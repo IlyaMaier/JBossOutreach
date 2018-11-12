@@ -1,4 +1,4 @@
-JBossOutreach App | GCI 2018
+# JBossOutreach App | GCI 2018
 
 Used libraries:
 - Glide
