@@ -6,9 +6,14 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +29,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ContributorsActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
+    private FrameLayout frameLayout;
     private ContributorsAdapter adapter;
     private List<Contributor> contributors;
     private ProgressBar progressBar;
+    private View leader1, leader2, leader3;
     private String repo;
 
     @Override
@@ -48,15 +54,19 @@ public class ContributorsActivity extends AppCompatActivity {
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         relativeLayout.addView(progressBar, params);
         progressBar.setVisibility(View.VISIBLE);
+        frameLayout = findViewById(R.id.leaders);
+        frameLayout.setVisibility(View.INVISIBLE);
+        leader1 = findViewById(R.id.leader1);
+        leader2 = findViewById(R.id.leader2);
+        leader3 = findViewById(R.id.leader3);
     }
 
     private void initRV() {
         contributors = new ArrayList<>();
-        recyclerView = findViewById(R.id.rv_contributors);
+        RecyclerView recyclerView = findViewById(R.id.rv_contributors);
         adapter = new ContributorsAdapter(contributors, this);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setAdapter(adapter);
-        recyclerView.setVisibility(View.INVISIBLE);
     }
 
     private void initRetrofit() {
@@ -67,8 +77,10 @@ public class ContributorsActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<List<Contributor>> call, @NonNull Response<List<Contributor>> response) {
                 contributors.addAll(response.body());
-                adapter.updateContributors(contributors);
-                recyclerView.setVisibility(View.VISIBLE);
+                setData();
+                if (contributors.size() > 2)
+                    adapter.updateContributors(contributors.subList(3, contributors.size()));
+                frameLayout.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.INVISIBLE);
                 adapter.notifyDataSetChanged();
             }
@@ -80,4 +92,20 @@ public class ContributorsActivity extends AppCompatActivity {
         });
     }
 
+    private void setData() {
+        if (contributors.size() > 0) {
+            ((TextView) leader1.findViewById(R.id.tv_name)).setText(contributors.get(0).getName());
+            Glide.with(this).load(contributors.get(0).getPhoto()).into(((ImageView) leader1.findViewById(R.id.photo)));
+
+            if (contributors.size() > 1) {
+                ((TextView) leader2.findViewById(R.id.tv_name)).setText(contributors.get(1).getName());
+                Glide.with(this).load(contributors.get(1).getPhoto()).into(((ImageView) leader2.findViewById(R.id.photo)));
+
+                if (contributors.size() > 2) {
+                    ((TextView) leader3.findViewById(R.id.tv_name)).setText(contributors.get(2).getName());
+                    Glide.with(this).load(contributors.get(2).getPhoto()).into(((ImageView) leader3.findViewById(R.id.photo)));
+                }
+            }
+        }
+    }
 }
